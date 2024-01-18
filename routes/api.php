@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ServiceOrderController;
+use App\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +29,5 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 });
+
+Route::get('/get-portfolio/{id}', [PortfolioController::class, 'getPortfolio'])->name('getPortfolio');

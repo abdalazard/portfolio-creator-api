@@ -43,6 +43,10 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
+        $status = $user->status()->create([
+            'is_published' => false
+        ]);
+
         return response(['user' => $user, "message" => "Created successfully!"]);
     }
     
