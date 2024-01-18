@@ -1,4 +1,4 @@
-[Documentação](https://abdalazard-api.com/)
+<!-- [Documentação](https://abdalazard-api.com/)
 
 
 * Como utilizar os endpoints:
@@ -10,4 +10,4 @@
 
 - Execute o comando "php artisan key:generate".
 
-- Execute o comando "php artisan migrate" para importar o banco de dados.
+- Execute o comando "php artisan migrate" para importar o banco de dados. -->
