@@ -10,7 +10,7 @@ class PortfolioController extends Controller
     public function getPortfolio(Request $request) {
 
         $user = User::findOrFail($request->id);
-        if($user->status()->is_published == false || null) {
+        if($user->status->is_published == false || null) {
             return response()->json(['error' => 'Portfolio not published'], 404);
         }
     

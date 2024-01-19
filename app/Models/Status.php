@@ -11,7 +11,7 @@ class Status extends Model
 
     protected $table = 'status';
 
-    protected $fillable = ['is_published'];
+    protected $fillable = ['is_published', 'id_user', 'profile', 'projects', 'skills', 'others', 'contacts'];
 
     public function user()
     {

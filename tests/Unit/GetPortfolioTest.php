@@ -72,58 +72,63 @@ class GetPortfolioTest extends TestCase
 
     public function test_get_user_portfolio() {
         
-        $user = User::factory()->create();
+        // Arrange
+        $user = User::factory()->create();        
+        Status::create([
+            'id_user' => $user->id,
+            'profile' => true,
+            'projects' => true,
+            'skills' => true,
+            'others' => true,
+            'contacts' => true,
+            'is_published' => true
+        ]);
 
-        $status = Status::create(['id_user' => $user->id]);
-        
         $profile = Profile::factory()->create(['id_user' => $user->id]);
-        $status->profile = true;
-        $status->save();
+        $user->status->profile = true;
+        $user->status->save();
 
         $projects = Projects::factory()->count(2)->create(['id_user' => $user->id]);
-        $status->projects = true;
-        $status->save();
+        $user->status->projects = true;
+        $user->status->save();
 
         $skills = Skills::factory()->count(2)->create(['id_user' => $user->id]);
-        $status->skills = 1;
-        $status->save();
+        $user->status->skills = 1;
+        $user->status->save();
 
         $others = Others::factory()->count(2)->create(['id_user' => $user->id]);
-        $status->others = true;
-        $status->save();
+        $user->status->others = true;
+        $user->status->save();
 
         $contacts = Contacts::factory()->create(['id_user' => $user->id]);
-        $status->contacts = true;
-        $status->save();
+        $user->status->contacts = true;
+        $user->status->save();
 
-        if($status->profile == true && $status->projects == true && $status->skills == true && $status->others == true && $status->contacts == true) {
-            $status->is_published = true;
-            $status->save();
+        if($user->status->profile == true && $user->status->projects == true && $user->status->skills == true && $user->status->others == true && $user->status->contacts == true) {
+            $user->status->is_published = true;
+            $user->status->save();
         }
 
-        // $portfolio = [
-        //     'profile' => $profile,
-        //     'projects' => $projects,
-        //     'skills' => $skills,
-        //     'others' => $others,
-        //     'contacts' => $contacts
-        // ];
-
+        // Act
         $response = $this->getJson("/api/get-portfolio/$user->id");
-        $response->assertStatus(Response::HTTP_OK);
-        // $response->assertJsonStructure();
-        // $response->assertJson([
-        //     [
-        //         'id' => $user->id,
-                // 'name' => $user->name,
-                // 'email' => $user->email,
-                // 'profile' => $profile->toArray(),
-                // 'projects' => $projects->toArray(),
-                // 'skills' => $skills->toArray(),
-                // 'others' => $others->toArray(),
-                // 'contacts' => $contacts->toArray()
-        //     ]
-        // ]);
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertJson([
+            'user' => [
+                'id' => $user->id,
+                'status' => [
+                    'id_user' => $user->id,
+                    'is_published' => $user->status->is_published,
+                ],
+                'profile' => $profile->toArray(),
+                'projects' => $projects->toArray(),
+                'skills' => $skills->toArray(),
+                'others' => $others->toArray(),
+                'contacts' => $contacts->toArray()
+            ]
+        ]);
+
     }
     
 }
