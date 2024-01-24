@@ -23,9 +23,7 @@ class PortfolioController extends Controller
             'contacts' => $user->contacts
         ];
 
-
-        $portfolio = response()->json($portfolio);
-        return $portfolio;
+        return response()->json($portfolio);;
 
     }
 }
